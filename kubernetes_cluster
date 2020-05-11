@@ -1,0 +1,27 @@
+create new  hosted zone
+test.example.com
+
+create VPC with 10.10.18.0/21 CIDR
+
+configure aws profile
+aws configure --profile kube-test
+
+Set below environment variables
+export AWS_PROFILE=kube-test
+export KOPS_STATE_STORE=s3://kube-state-store
+
+
+Create EC2 Keypair
+Key pair name: test.pem
+
+Extract public key from Ec2 keypair
+ssh-keygen -y -f ~/.ssh/test.pem > test_public
+
+copy the secret
+kops create secret --name kube.test.example.com sshpublickey admin -i ~/test_public
+
+Create kops cluster
+kops create cluster --kubernetes-version 1.15 --network-cidr 10.10.18.0/21 --vpc XXXXXXX  --zones us-west-2d,us-west-2e,us-west-2f --bastion --topology=private --networking=weave --master-zones=us-west-2d,us-west-2e,us-west-2f --dns-zone=XXXXXX --name=kube.test.example.com --master-size=t2.medium --node-size=t2.medium  --cloud=aws
+
+validate cluster
+kops validate cluster
