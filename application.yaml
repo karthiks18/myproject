@@ -1,0 +1,66 @@
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/instance: test
+      app.kubernetes.io/name: webapp-test
+    name: webapp-test
+    namespace: application-ns
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: '${parameters[''env'']}'
+        app.kubernetes.io/name: '${execution[''application'']}'
+    template:
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - webapp-test
+                    - key: app.kubernetes.io/instance
+                      operator: In
+                      values:
+                        - test
+                topologyKey: kubernetes.io/hostname
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                    - webapp-test
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - test
+                topologyKey: failure-domain.beta.kubernetes.io/zone	  
+        containers:
+          - image: karthiks18/myweb:0.0.2
+            imagePullPolicy: Always
+            livenessProbe:
+              httpGet:
+                path: /
+                port: 8080
+              initialDelaySeconds: 30
+              periodSeconds: 60
+            name: webapp-test
+            ports:
+              - containerPort: 8080
+                name: http
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 8080
+              initialDelaySeconds: 30
+              periodSeconds: 60
+            resources:
+              limits:
+                memory: 2Gi
