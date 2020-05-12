@@ -1,0 +1,17 @@
+- apiVersion: autoscaling/v2beta1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    name: webapp-hpa
+    namespace: application-ns
+  spec:
+    scaleTargetRef:
+      apiVersion: apps/v1beta1
+      kind: Deployment
+      name: webapp-test
+    minReplicas: 3
+    maxReplicas: 6
+    metrics:
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 60
