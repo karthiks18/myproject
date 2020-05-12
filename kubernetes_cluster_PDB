@@ -1,0 +1,20 @@
+- apiVersion: policy/v1beta1
+  kind: PodDisruptionBudget
+  metadata:
+    name: webapp-test-min-a-pdb
+  spec:
+    minAvailable:1
+    selector:
+    matchLabels:
+      app.kubernetes.io/name: webapp-test
+	  
+	  
+- apiVersion: policy/v1beta1
+  kind: PodDisruptionBudget
+  metadata:
+    name: webapp-test-max-ua-pdb
+  spec:
+    maxUnavailable:1
+    selector:
+    matchLabels:
+      app.kubernetes.io/name: webapp-test
