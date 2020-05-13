@@ -10,8 +10,8 @@
     replicas: 3
     selector:
       matchLabels:
-        app.kubernetes.io/instance: '${parameters[''env'']}'
-        app.kubernetes.io/name: '${execution[''application'']}'
+        app.kubernetes.io/instance: test
+        app.kubernetes.io/name: webapp-test
     template:
       spec:
         affinity:
