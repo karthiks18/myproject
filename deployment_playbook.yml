@@ -1,0 +1,7 @@
+- hosts: localhost
+  tasks:
+  - name: Deploy the application
+    k8s:
+      state: present
+      validate_certs: no
+      definition: "{{ lookup('template', 'application.yaml') | from_yaml }}"
