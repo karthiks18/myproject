@@ -20,3 +20,23 @@ Create a CI/CD pipeline with Kubernetes and Jenkins
 
 Step 01: The Application Files
 Our sample application will respond with ‘Hello World’ to any GET request. Create a new file called App.java and Since we are building a CD pipeline, we should have some tests in place. Our code is so simple that it only needs one test case which is AppTest.java = Source code can be found in src.
+
+Step 02: By following this repository the pre-requisite of tools to be installed and available.
+Git
+Jenkins
+Maven
+Ansible
+Docker &
+Kubernetes
+
+Jenkins runs with jenkins user /home/jenkins/.kube/config kube config file is placed in above path.jenkins user have access to kubernetes cluster where it will deploy the apps
+
+kubernetes cluster creation Please follow cluster creation steps mentioned in the file kubernetes_cluster
+
+Horizontal pod auto scaler deployment kubectl apply -f hpa.yaml
+
+It will autoscale number of pods based on memory utilization
+
+pod distrution budget deployment kubectl apply -f pdb.yaml
+
+application service deployment kubectl apply -f app_service.yaml
