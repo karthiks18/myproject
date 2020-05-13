@@ -43,7 +43,7 @@
                       - test
                 topologyKey: failure-domain.beta.kubernetes.io/zone	  
         containers:
-          - image: karthiks18/myweb:0.0.2
+          - image: karthiks18/myweb:"{{ image_id }}"
             imagePullPolicy: Always
             livenessProbe:
               httpGet:
