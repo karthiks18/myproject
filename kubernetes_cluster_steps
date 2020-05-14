@@ -25,3 +25,11 @@ kops create cluster --kubernetes-version 1.15 --network-cidr 10.10.18.0/21 --vpc
 
 validate cluster
 kops validate cluster
+
+Application resources 
+
+kubectl apply -f kubernetes_app_HPA.yaml 
+
+kubectl apply -f kubernetes_app_service.yaml
+
+kubectl apply -f kubernetes_app_PDB.yaml
