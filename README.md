@@ -59,7 +59,26 @@ Step 05: Configure Jenkins Credentials For GitHub and Docker Hub
 
 Go to /credentials/store/system/domain/_/newCredentials and add the credentials to both targets. Make sure that you give a meaningful ID and description
 
-Step 06: Create the Jenkinsfile
+Step 06: Create the kubernetes cluster
+
+Kubernetes cluster is created in AWS using kops 
+As shown below, cluster worker node  and master is spread across mulitple AZ to avoid impact of AZ failure.
+As 3 master nodes are created,we will high availabilty if any of the master node is failed.
+
+```kops create cluster --kubernetes-version 1.15 --network-cidr 10.10.18.0/21 --vpc XXXXXXX  --zones us-west-2d,us-west-2e,us-west-2f --bastion --topology=private --networking=weave --master-zones=us-west-2d,us-west-2e,us-west-2f --dns-zone=XXXXXX --name=kube.test.example.com --master-size=t2.medium --node-size=t2.medium  --cloud=aws```
+For details steps to create kubernetes cluster ,Please refer kubernetes_cluster_steps file.
+
+Steps 07:Create deployment  file and other resources
+
+      7.1 Deployment file:
+Image id is parameterized and latest build number is given as command line argument in ansible play book.
+podAntiAffinity (topologyKey: kubernetes.io/hostname,topologyKey: failure-domain.beta.kubernetes.io/zone) is included to avoid  more than one pod  to be scedhuled in same hostname and AZ.Liveness and readiness probe are configured with 8080 port. memory limit is specified as 2 GB ,even memory leak is happened due to the code issue, it will affect worker node where it is deployed 
+     7.2 othere resources
+kubernetes_app_HPA.yaml -->It will autoscale number of pods based on memory utilization
+kubernetes_app_service.yaml--> application is exposed as load balancer and ssl is configured.
+kubernetes_app_PDB.yaml--> PodDisruptionBudget is specified , at any given time maximum one pod can be unavailablee  and at least one pod should be in available
+
+Step 07: Create the Jenkinsfile
 
 The Jenkinsfile is what instructs Jenkins about how to build, test, dockerize, publish, and deliver our application. Jenkinsfile is available in repository to view.
 
@@ -67,7 +86,7 @@ kubernetes cluster creation Please follow cluster creation steps mentioned in th
 
 Horizontal pod auto scaler deployment kubectl apply -f kubernetes_app_HPA.yaml
 
-It will autoscale number of pods based on memory utilization
+
 
 pod distrution budget deployment kubectl apply -f kubernetes_app_PDB.yaml
 
