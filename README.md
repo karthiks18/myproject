@@ -1,10 +1,10 @@
-#Create a CI/CD Pipeline For a Java App
+#Create a CI/CD Pipeline For a Java Application
 
-In this lab, we are building a continuous delivery (CD) pipeline. We are using a very simple application written in Java. For the sake of simplicity, we are going to run only one type of test against the code. The prerequisites for this lab are as follows:
-
-This repo consists of a Java Hello World application. It shows:
+In this lab, we are building a continuous delivery (CD) pipeline. We are using a very simple application written in Java (Hello World). For the sake of simplicity, we are going to run only one type of test against the code. The prerequisites for this lab are as follows:
 
 Run & test the application from CLI
+
+Jenkins instance
 
 Create a Docker image, run the container and test it
 
@@ -20,9 +20,9 @@ Image registry: Docker Registry is used to create Images.
 
 An account on GitHub. 
 
-The pipeline can be depicted as follows:
+The pipeline can be created as follows:
 
-Create a CI/CD pipeline with Kubernetes and Jenkins
+Create a CI/CD pipeline with Kubernetes and Jenkins.
 
 The Application Files
 Our sample application will respond with ‘Hello World’ to any GET request. Create a new file called App.java and Since we are building a CD pipeline, we should have some tests in place. Our code is so simple that it only needs one test case which is AppTest.java = Source code can be found in src.
@@ -35,11 +35,11 @@ The Service
 Since we are using Kubernetes as the platform on which we host this application, we need at least a service and a deployment.
 
 The deployment
-The application itself, once dockerized, can be deployed to Kubernetes through a Deployment resource. The deployment.yml file available in repositoty. The most interesting thing about this deployment definition is the image part. Instead of hardcoding the image name and tag, we are using a variable. Later on, we shall see how we can use this definition as a template for Ansible and substitute the image name (and any other parameters of the deployment) through the command line arguments. 
+The application itself, once dockerized, can be deployed to Kubernetes through a Deployment resource. The deployment.yml file available in repositoty. 
 
 The Playbook
 
-In this lab, we are using Ansible as our deployment tool. There are many other ways to deploy Kubernetes resources including Helm Charts, but I thought Ansible is a much easier option. Ansible uses playbooks to organize its instructions. Our playbook.yml file placed in repository.
+In this lab, we are using Ansible as our deployment tool. There are many other ways to deploy Kubernetes resources including Helm Charts, but we uses Ansible here. Ansible uses playbooks to organize its instructions. Our playbook.yml file placed in repository.
 
 Ansible already includes the k8s module for handling communication with the Kubernetes API server. So, we don’t need kubectl installed but we do need a valid kubeconfig file for connecting to the cluster.
 
@@ -50,7 +50,7 @@ Install Jenkins, Ansible, and Docker
 Let’s install Ansible and use it to automatically deploy a Jenkins server and Docker runtime environment.
 
 Step 03: Configuring Jenkins User To Connect To The Cluster
-Jenkins runs with jenkins user /home/jenkins/.kube/config kube config file is placed in above path.jenkins user have access to kubernetes cluster where it will deploy the apps.
+Jenkins runs with jenkins user /home/jenkins/.kube/config kube config file is placed in above path.jenkins user have access to kubernetes cluster where it will deploy the apps. 
 
 Step 04: Create The Jenkins Pipeline Job
 
@@ -58,9 +58,10 @@ Create a new Jenkins job and select the Pipeline type. We used the Poll SCM as t
 In the pipeline itself, we specified the repository URL and the credentials. The branch is master.
 In this lab, we are adding all the job’s code in a Jenkinsfile that is stored in the same repository as the code.
 
+
 Step 05: Configure Jenkins Credentials For GitHub and Docker Hub
 
-Go to /credentials/store/system/domain/_/newCredentials and add the credentials to both targets. Make sure that you give a meaningful ID and description
+Go to /credentials/store/system/domain/_/newCredentials and add the credentials to both targets.
 
 Step 06: Create the kubernetes cluster
 
@@ -97,11 +98,11 @@ The Jenkinsfile is what instructs Jenkins about how to build, test, dockerize, p
  
 Compile-Package stage
  
- build is taken using maven and packaged as jar file.
+ Build is taken using maven and packaged as jar file.
  
  Build Docker Image stage
  
- Image is created using docker file.docker file have steps to copy the jar file into base alphine and      exposed in  port 8080.Image   is tagged with dockerhub userid and jenking build number.
+ Image is created using docker file.docker file have steps to copy the jar file into base alphine and exposed in port 8080. Image is tagged with dockerhub userid and jenking build number.
  
  Docker Image Push stage
  
