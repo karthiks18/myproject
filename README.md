@@ -89,6 +89,8 @@ kubernetes_app_service.yaml--> application is exposed as load balancer and ssl i
 
 kubernetes_app_PDB.yaml--> PodDisruptionBudget is specified , at any given time maximum one pod can be unavailablee  and at least one pod should be in available
 
+kubernetes_external_dns.yaml-->Ext_DNS role have acess to Route53.external dns will update hostname entry in hosted zone 
+
 Step 08: Create the Jenkinsfile
 
 The Jenkinsfile is what instructs Jenkins about how to build, test, dockerize, publish, and deliver our application. Jenkinsfile is available in repository to view.
