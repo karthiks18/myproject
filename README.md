@@ -1,6 +1,6 @@
 #Create a CI/CD Pipeline For a Java App
 
-In this lab, we are building a continuous delivery (CD) pipeline. We are using a very simple application written in Go. For the sake of simplicity, we are going to run only one type of test against the code. The prerequisites for this lab are as follows:
+In this lab, we are building a continuous delivery (CD) pipeline. We are using a very simple application written in Java. For the sake of simplicity, we are going to run only one type of test against the code. The prerequisites for this lab are as follows:
 
 This repo consists of a Java Hello World application. It shows:
 
@@ -109,4 +109,7 @@ Compile-Package stage
  
  Docker image is deployed using ansible play book.Image id is passed as command line argument.
  
+Step 09: Test Application
+
+curl http://webapp-test.test.example.com:8080
  
