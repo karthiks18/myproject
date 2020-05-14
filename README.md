@@ -14,9 +14,9 @@ Let’s get started!
 
 Step 01 : 
 
-A running Jenkins instance. This could be a cloud instance, a virtual machine, a bare metal one, or a docker container. It must be publicly accessible from the internet so that the repository can connect to Jenkins through web-hooks.
+A running Jenkins instance. It must be publicly accessible from the internet so that the repository can connect to Jenkins through web-hooks.
 
-Image registry: you can use Docker Registry, a cloud-based offering like ECR or GCR, or even a custom registry.
+Image registry: Docker Registry is used to create Images.
 
 An account on GitHub. 
 
