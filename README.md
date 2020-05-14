@@ -113,5 +113,5 @@ Compile-Package stage
  
 Step 09: Test Application
 
-curl http://webapp-test.test.example.com:8080
+curl https://webapp-test.test.example.com:8080/
  
