@@ -16,7 +16,7 @@ node{
    }
    sh 'docker push karthiks18/myweb:${env.BUILD_NUMBER}'
    }
-      stage ('Deploy') {
+   stage ('Deploy') {
            steps {
                script{
                    sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${env.BUILD_NUMBER}\""
