@@ -71,23 +71,39 @@ For details steps to create kubernetes cluster ,Please refer kubernetes_cluster_
 Steps 07:Create deployment  file and other resources
 
       7.1 Deployment file:
+      
 Image id is parameterized and latest build number is given as command line argument in ansible play book.
-podAntiAffinity (topologyKey: kubernetes.io/hostname,topologyKey: failure-domain.beta.kubernetes.io/zone) is included to avoid  more than one pod  to be scedhuled in same hostname and AZ.Liveness and readiness probe are configured with 8080 port. memory limit is specified as 2 GB ,even memory leak is happened due to the code issue, it will affect worker node where it is deployed 
-     7.2 othere resources
+
+podAntiAffinity (topologyKey: kubernetes.io/hostname,topologyKey: failure-domain.beta.kubernetes.io/zone) is included to avoid  more than one pod  to be scedhuled in same hostname and AZ.Liveness and readiness probe are configured with 8080 port. 
+
+memory limit is specified as 2 GB ,even memory leak is happened due to the code issue, it will affect worker node where it is deployed 
+
+     7.2 other resources
+     
 kubernetes_app_HPA.yaml -->It will autoscale number of pods based on memory utilization
+
 kubernetes_app_service.yaml--> application is exposed as load balancer and ssl is configured.
+
 kubernetes_app_PDB.yaml--> PodDisruptionBudget is specified , at any given time maximum one pod can be unavailablee  and at least one pod should be in available
 
 Step 07: Create the Jenkinsfile
 
 The Jenkinsfile is what instructs Jenkins about how to build, test, dockerize, publish, and deliver our application. Jenkinsfile is available in repository to view.
-
-kubernetes cluster creation Please follow cluster creation steps mentioned in the file kubernetes_cluster
-
-Horizontal pod auto scaler deployment kubectl apply -f kubernetes_app_HPA.yaml
-
-
-
-pod distrution budget deployment kubectl apply -f kubernetes_app_PDB.yaml
-
-application service deployment kubectl apply -f kubernetes_app_service.yaml
+ 
+Compile-Package stage
+ 
+ build is taken using maven and packaged as jar file.
+ 
+ Build Docker Image stage
+ 
+ Image is created using docker file.docker file have steps to copy the jar file into base alphine and      exposed in  port 8080.Image   is tagged with dockerhub userid and jenking build number.
+ 
+ Docker Image Push stage
+ 
+ Docker hub credential is configured in jenkins. Image is pushed to docker hub using that credentials.
+ 
+ Deploy stage
+ 
+ Docker image is deployed using ansible play book.Image id is passed as command line argument.
+ 
+ 
