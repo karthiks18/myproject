@@ -65,10 +65,10 @@ The Jenkinsfile is what instructs Jenkins about how to build, test, dockerize, p
 
 kubernetes cluster creation Please follow cluster creation steps mentioned in the file kubernetes_cluster
 
-Horizontal pod auto scaler deployment kubectl apply -f hpa.yaml
+Horizontal pod auto scaler deployment kubectl apply -f kubernetes_app_HPA.yaml
 
 It will autoscale number of pods based on memory utilization
 
-pod distrution budget deployment kubectl apply -f pdb.yaml
+pod distrution budget deployment kubectl apply -f kubernetes_app_PDB.yaml
 
-application service deployment kubectl apply -f app_service.yaml
+application service deployment kubectl apply -f kubernetes_app_service.yaml
