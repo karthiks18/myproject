@@ -2,7 +2,7 @@
   kind: Service
   metadata:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: 'webapp-test.test.example.com '
+      external-dns.alpha.kubernetes.io/hostname: 'webapp-test.test.example.com'
       service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
       service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: XXXXXX
       service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
