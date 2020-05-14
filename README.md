@@ -11,6 +11,8 @@ Create Kubernetes deployment and test it
 
 Let’s get started!
 
+Step 01 : 
+
 A running Jenkins instance. This could be a cloud instance, a virtual machine, a bare metal one, or a docker container. It must be publicly accessible from the internet so that the repository can connect to Jenkins through web-hooks.
 
 Image registry: you can use Docker Registry, a cloud-based offering like ECR or GCR, or even a custom registry.
@@ -41,7 +43,7 @@ In this lab, we are using Ansible as our deployment tool. There are many other w
 Ansible already includes the k8s module for handling communication with the Kubernetes API server. So, we don’t need kubectl installed but we do need a valid kubeconfig file for connecting to the cluster.
 
 
-Step 2 :-
+Step 02 :-
 
 Install Jenkins, Ansible, and Docker
 Let’s install Ansible and use it to automatically deploy a Jenkins server and Docker runtime environment.
@@ -86,7 +88,7 @@ kubernetes_app_service.yaml--> application is exposed as load balancer and ssl i
 
 kubernetes_app_PDB.yaml--> PodDisruptionBudget is specified , at any given time maximum one pod can be unavailablee  and at least one pod should be in available
 
-Step 07: Create the Jenkinsfile
+Step 08: Create the Jenkinsfile
 
 The Jenkinsfile is what instructs Jenkins about how to build, test, dockerize, publish, and deliver our application. Jenkinsfile is available in repository to view.
  
